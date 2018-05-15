@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.6)
+include(core/CMake/LFLOS.cmake)
+
+set(LFL_OSX_TEAM 9S723G94YQ) 
+set(LFL_OSX_CERT 3rd Party Mac Developer Application: Lucid Fusion Labs, LLC \(9S723G94YQ\))
+set(LFL_OSX_PROVISION_NAME "LTerminal Production")
+
+set(LFL_FLATBUFFERS 1)
+set(LFL_PNG 1)
+set(LFL_GIF 1)
+set(LFL_JPEG 1)
+set(LFL_FABRIC 1)
+set(LFL_OPENSSL 1)
+set(LFL_ICONV 1)
+set(LFL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(LFL_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
+set(LFL_CORE_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/core)
+set(LFL_OS_CORE_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/../${LFL_OS}/core)
+
+include(core/CMake/LFLCore.cmake)
+add_subdirectory(LTerminal)

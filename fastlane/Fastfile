@@ -1,0 +1,40 @@
+desc "Build and submit to Mac Store"
+lane :submit_macstore do
+  
+  team_id = "9S723G94YQ"
+  keychain_name = "macstore_certs"
+  keychain_pw = SecureRandom.base64
+
+  create_keychain(
+    name: keychain_name,
+    password: keychain_pw,
+    default_keychain: true,
+    unlock: true,
+    timeout: 3600,
+    lock_when_sleeps: true,
+  )
+  
+  import_certificate(
+    certificate_path: "fastlane/Certificates/distribution.p12",
+    certificate_password: ENV["KEY_PASSWORD"],
+    keychain_name: keychain_name,
+    keychain_password: keychain_pw
+  )
+ 
+  sigh(
+    platform: "macos",
+    username: "LucidFusionLabs@gmail.com",
+    provisioning_name: "LTerminal Production",
+    team_id: team_id
+  )
+  
+  gym(
+    clean: false,
+    project: "osx/Project.xcodeproj",
+    scheme: "LTerminal",
+    configuration: "Release",
+    include_bitcode: false,
+    include_symbols: true,
+    export_team_id: team_id
+  )
+end

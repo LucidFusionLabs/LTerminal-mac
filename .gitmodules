@@ -1,0 +1,6 @@
+[submodule "LTerminal"]
+	path = LTerminal
+	url = https://github.com/LucidFusionLabs/LTerminal
+[submodule "core"]
+	path = core
+	url = https://github.com/LucidFusionLabs/core

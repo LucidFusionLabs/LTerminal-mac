@@ -1,0 +1,45 @@
+language: objective-c
+osx_image: xcode9.3
+if: tag IS present
+
+before_install:
+  - echo $TRAVIS_OS_NAME
+  - echo $LANG
+  - echo $LC_ALL
+  - pwd
+  - cmake --version
+  - brew install xcproj
+
+before_script:
+  - openssl aes-256-cbc -k $CERTIFICATE_PASSWORD -in fastlane/Certificates/distribution.p12.enc -d -a -out fastlane/Certificates/distribution.p12
+  - gem update fastlane
+  - fastlane update_fastlane
+
+script:
+  - mkdir osx && cd osx
+  - cmake -GXcode -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/OSXToolchain.cmake ..
+  - mkdir -p Project.xcodeproj/xcshareddata/xcschemes
+  - cp ../xcscheme/* Project.xcodeproj/xcshareddata/xcschemes
+  - grep -v INSTALL_PATH Project.xcodeproj/project.pbxproj > Project.xcodeproj/project.pbxproj.new
+  - mv Project.xcodeproj/project.pbxproj.new Project.xcodeproj/project.pbxproj
+  - xcproj touch Project.xcodeproj || true
+  - xcproj touch Project.xcodeproj || true
+  - xcproj touch Project.xcodeproj || true
+  - xcproj touch Project.xcodeproj
+  - cd ..
+  - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh osx osx/Project.xcodeproj LTerminal
+  - xcodebuild -project osx/Project.xcodeproj -target flatc -configuration Release
+  - fastlane submit_macstore
+
+after_success:
+  - echo "success"
+
+after_failure:
+  - echo "failure"
+
+env:
+  global:
+  - CRASHLYTICS_API_TOKEN=b8bfc53a14ff223e3cf7df5039c377bdac3ca074
+  - secure: fcvLkwns1ldwxxo59yadBLbaKtXgSOPvgT29fP+cpkv/vSUVca5GZ5vWuDROUnfsXweTPFQX4M7PTWtCL3XF+I4yhgjyblScvdDAFk8L9pr37ksM9rU6tQA84SkIRw6nubH9lB3ktkeE1gmoTUwxwJCcBesy0v/XlBAoHwY//BMe0J3mcoZ4DJHupFCcmOmfBxIY7ZrD6IXF6mtWz7MU2nu9EBJIExiX+QreDiIsW8HqBusFCSt6zA+mM8HYUY3Xzi5cAgutHceupI6Y2ODE7Lw6rjAeBxjAz9KplnoP16yTBeZ71RSfDCZE1M+IJgL4ZD04Ehr2YSdaML+zF46CYgWi9e06BYl5kTiFQnQ7BPh3l7HbVkiBRqSjOMtCr5TociAIwzfgHc+PzdLofj0nk2Nv5Xt5YzNJFklWHv8zVk7aDA8kaObw6seWbYNRg9OamVTajbf7ACT7VOHIK6XOhdKDuebF0yC6R8LC6p7UqXtPo8NCMsDdTXCVnzW9o41nC/pSjYUot6eZNKXMJpiWqB2CZrN4vpxuPjRTGMN2qgbHiJxa+WaXLLPvXjcq0E5Ub0lrn2Huc5uLxHsveaL6w0JzotFOvyRshinAcgkQ5SRJlANxAp3aoOc09jM2VvzH0oIJXMcP0R90TzhIhvEob6oxlEsh3YnHRPrgbyM7JOc=
+  - secure: HQzAh/RM/UgH1bRcXec4Lv2Zd4YlIUH+aixeXCVRMOWBXYUzQO5HxE/8m6k2EHQwKAWWmsjk32grHXP5xU+rUfR+/eR59qzv0soE3BKQch3gUrWoeNhNyifXJxSmUW4OEpbTt+ykJl3hFh38aulgzQ+2z6XFclDpkwPIEDy7GZ1eXkaf57vz4gXsDJyBorz0VnBEG5E1LBVE5QYLxtgW+HVZhi41wVKF96DBrlP6qZwR8Savqg2csQbnbNO8V0T7tSLv/2cHnakTNGjoR24P8R27Mqs7P7Bzn1lr6QB9Kkpie5kxVDjscgYaHHdyyVyBfBRs1LunaWWzqUjrSKnRZFMfXsanrYdG6xVH85ZjxB7+ZX18KyVRmF4o+5Xtx12zVxkoNaU/6AIJt/USZRTSxG/DtikQi/7f2iLwc/BS2wNM37ZjDpwWGY4DPy3zvBJA3rGPSdwRdBl4J4yelchfLq+m+9jGGTgjpD9Wq6n4gzehSdF4iV96L6YAPDluXuV6U4fNgsl7etYDYKMeQ16CeFkGrolTNHMcC4EHVyJoH3EDUo0YQcmHHr53Zq2odPzHrXB7jOQcNhiU8kp/GTv2tCieC0SQMlfLAMKvs/OseRmBc1Ju4tcVoFtEOGmyUSZH7amfK/UNCo9AjFMLB2+8yvEo+B2Ux5QshX4E5iaKDh0=
+  - secure: ePh9O0VUj+rm3OvasKFgEFiPhuiysTFY6tNT0lfFtXkqc4UXwJr+/Lz2yCkxvicM7K6qxiHpq+t9T9Y/bgWPKFzCT2iytG8lxSFkCzzZbytwunOOKuLxg1eCRQsCC89B8uOpELrzo12ivnwCo5qquD/rGsKIa73UdrbT5R3CZADI4ipTLzIpP3mHOgKkenhBhzJYZIDKe/qKDMnBnBQUWFl95Ov7R7NxybhdYQD7fjg+dnx1tLNterQVbfUlTE4fXmLrGaThpW99EcFINV7yULnydXIFyhR0d59Swrk4tEqaYcgQN47+UoT2XoeL/1ADF7UzPxMTqJxMENQ1XtcqF99lSSnGy7dWTDSq4jFkQoXk8iQvA6ewY4ekS3H102EUp3Zajj68iikMDD2n9nTE9HtGCIbXRowj4t98X+PET7juj6RALbhc2fHKqOx7fWB4mDcSrgRckpSb8N2EEetTuELWCfc717VaDxSn26uL+6kHtVSf3F6jhKZT2l0fmcfVSZ0Z5WAORIP0ASxkiT7lR34GKTsnb6MhutE7YlHNxuWHlhUK3b16T9CuQQT+qs4cdoF5z9EPpfkuP0Aoqut1XDmbDHF+1GyQfSl7QBZ6v9A0m430FO/NIViNQkhdejHf65qBZwHEvknOt/H5PndcHs+9ONJy9OzZ35pQc0nCEkY=
