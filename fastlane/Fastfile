@@ -20,16 +20,9 @@ lane :developer_id_app do
     keychain_name: keychain_name,
     keychain_password: keychain_pw
   )
- 
-  sigh(
-    platform: "macos",
-    username: "LucidFusionLabs@gmail.com",
-    provisioning_name: "LTerminal Production",
-    team_id: team_id
-  )
   
   gym(
-    clean: false,
+    clean: true,
     project: "osx/Project.xcodeproj",
     scheme: "LTerminal",
     configuration: "Release",
