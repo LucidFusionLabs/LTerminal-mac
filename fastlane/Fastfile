@@ -25,8 +25,7 @@ lane :developer_id_app do
     platform: "macos",
     username: "LucidFusionLabs@gmail.com",
     provisioning_name: "LTerminal Production",
-    team_id: team_id,
-    adhoc: true
+    team_id: team_id
   )
   
   gym(
