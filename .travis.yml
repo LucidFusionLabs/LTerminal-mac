@@ -1,6 +1,6 @@
 language: objective-c
 osx_image: xcode9.3
-if: tag IS present
+if: tag =~ ^v
 
 before_install:
   - echo $TRAVIS_OS_NAME
@@ -29,7 +29,7 @@ script:
   - cd ..
   - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh osx osx/Project.xcodeproj LTerminal
   - xcodebuild -project osx/Project.xcodeproj -target flatc -configuration Release
-  - fastlane build_app
+  - fastlane developer_id_app
 
 after_success:
   - echo "success"
