@@ -1,8 +1,8 @@
 desc "Build and submit to Mac Store"
-lane :submit_macstore do
-  
+lane :build_app do
+
   team_id = "9S723G94YQ"
-  keychain_name = "macstore_certs"
+  keychain_name = "fastlane_certs"
   keychain_pw = SecureRandom.base64
 
   create_keychain(

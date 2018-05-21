@@ -29,7 +29,7 @@ script:
   - cd ..
   - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh osx osx/Project.xcodeproj LTerminal
   - xcodebuild -project osx/Project.xcodeproj -target flatc -configuration Release
-  - fastlane submit_macstore
+  - fastlane build_app
 
 after_success:
   - echo "success"

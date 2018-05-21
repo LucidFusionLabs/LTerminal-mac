@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 include(core/CMake/LFLOS.cmake)
 
 set(LFL_OSX_TEAM 9S723G94YQ) 
-set(LFL_OSX_CERT 3rd Party Mac Developer Application: Lucid Fusion Labs, LLC \(9S723G94YQ\))
+set(LFL_OSX_CERT Developer ID Application: Lucid Fusion Labs, LLC \(9S723G94YQ\))
 set(LFL_OSX_PROVISION_NAME "LTerminal Production")
 
 set(LFL_FLATBUFFERS 1)
