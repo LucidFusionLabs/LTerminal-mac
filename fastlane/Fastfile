@@ -28,7 +28,11 @@ lane :developer_id_app do
     configuration: "Release",
     include_bitcode: false,
     include_symbols: true,
-    export_team_id: team_id,
-    export_method: "package"
+    export_team_id: team_id
+  )
+
+  dmg(
+    path: "LTerminal.app",
+    output_path: "LTerminal.dmg"
   )
 end
