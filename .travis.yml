@@ -37,6 +37,15 @@ after_success:
 after_failure:
   - echo "failure"
 
+deploy:
+  provider: releases
+  api_key:
+    secure: SOoZk+iYrdaNdI15MTnQUMPtmqaa0SP4G/PPfS1CxNDVHM+kp7OC9yF32hfV7ImkLR0fcevpIFFsAf8I9eR6nIrIYkGWSBdlJhgFElEY/YcB55rTMqcn0D+asHOo2WW7Tk848yS7wOu1b5sXgD8cNwlQWO03fYag4e9iya4WEFNYefWi3f5j1Q9LFwt67xI1asHa+zDrBSpLXF+MSitgUL8gLu/Zu/n3FEk3uXinQscN557MZZ36kXaWGoU3k1h34tphcZDNJdIjMrFnqeTP0o/FutblXlN9khA69BV+zjt1wZJJ3Mcv3hymDbGuuuOGLvHcrIUZ5tM82cns9SAg45mMKES7loco/TGRO6paTzRMLZTjpQ7xlVHZLWcN9Y8Af5B1LC1FWiwshdiCBGvNalCWgjbWwel6/+mdwoSX2jNdaywt6nolwZ3tTnhxXP9RJqk4VuSh/J1vbTbSZ2dcNS10Cr2XcdmwpE1jgdT6OW5SKwCDx8/ct5veDa372UYfSPrZ6Ow3sVx5KNYDs5Xccje7pDi1UtGX0TRwCEdH+Qh9E/nRZkZeWTkMb+LI18u5li7VGu+Gi8kctr9IKASEdF8iRlPIP4m589GbYiOL36MoDv06V86sFw6k9hiAzquIasFFAMJfg+P89v39aHBABRE/hENHfnno23zxohZjxiY=
+  file: "LTerminal.dmg"
+  skip_cleanup: true
+  on:
+    tags: true
+
 env:
   global:
   - CRASHLYTICS_API_TOKEN=b8bfc53a14ff223e3cf7df5039c377bdac3ca074
