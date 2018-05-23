@@ -15,7 +15,7 @@ before_install:
   - echo $LC_ALL
   - pwd
   - cmake --version
-  - brew install xcproj
+  - brew install xcproj nasm yasm makedepend
 
 before_script:
   - openssl aes-256-cbc -k $CERTIFICATE_PASSWORD -in fastlane/Certificates/distribution.p12.enc -d -a -out fastlane/Certificates/distribution.p12
