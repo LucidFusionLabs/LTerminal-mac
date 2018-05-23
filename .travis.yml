@@ -8,7 +8,7 @@ before_install:
   - git submodule update --init --recursive LTerminal
   - git submodule update --init core
   - cd core
-  - git submodule update --init --recursive imports/flatbuffers imports/libpng imports/giflib imports/libjpeg-turbo imports/osx/fabric-osx imports/openssl
+  - git submodule update --init --recursive CMake imports/flatbuffers imports/libpng imports/giflib imports/libjpeg-turbo imports/osx/fabric-osx imports/openssl
   - cd ..
   - echo $TRAVIS_OS_NAME
   - echo $LANG
