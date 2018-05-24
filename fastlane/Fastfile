@@ -28,7 +28,8 @@ lane :developer_id_app do
     configuration: "Release",
     include_bitcode: false,
     include_symbols: true,
-    export_team_id: team_id
+    export_team_id: team_id,
+    export_method: 'package'
   )
 
   dmg(
