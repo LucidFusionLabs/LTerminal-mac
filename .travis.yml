@@ -20,7 +20,6 @@ before_install:
 before_script:
   - openssl aes-256-cbc -k $CERTIFICATE_PASSWORD -in fastlane/Certificates/distribution.p12.enc -d -a -out fastlane/Certificates/distribution.p12
   - gem update fastlane
-  - fastlane update_fastlane -v
 
 script:
   - mkdir osx && cd osx
@@ -35,7 +34,8 @@ script:
   - xcproj touch Project.xcodeproj
   - cd ..
   - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh osx osx/Project.xcodeproj LTerminal
-  - xcodebuild -project osx/Project.xcodeproj -target flatc -configuration Release
+  - xcodebuild -project osx/Project.xcodeproj -target flatc -configuration Release | xcpretty
+  - xcodebuild -project osx/Project.xcodeproj -target libjpeg-turbo -configuration Release | xcpretty
   - fastlane developer_id_app
 
 after_success:
